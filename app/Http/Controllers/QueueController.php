@@ -23,7 +23,7 @@ class QueueController extends Controller
         // $orders = Order::with('items','items.product')->limit(10000)->get();
         $orders = [];
         $result = [
-             Benchmark::measure(function () use(&$orders) {
+            Benchmark::measure(function () use (&$orders) {
                 // return Order::with('items','items.product')->limit(100000)->get();
                 // $orders = Order::with('items:id,order_id,product_id,quantity,price')->limit(1000)->get();
                 // var_dump($orders[1]->toArray());
@@ -44,7 +44,7 @@ class QueueController extends Controller
                 //     ])
                 //     ->paginate(3);
                 $orders = DB::table('orders')->limit(500)
-                    ->select(['orders.id as id','orders.user_id', 'orders.order_number', 'orders.total_amount', 'orders.created_at','users.id as userId','users.name','users.email','items.id  as itemId','items.product_id','items.order_id','items.quantity','items.price','products.id as pro_id','products.name','products.price'])//])
+                    ->select(['orders.id as id', 'orders.user_id', 'orders.order_number', 'orders.total_amount', 'orders.created_at', 'users.id as userId', 'users.name', 'users.email', 'items.id  as itemId', 'items.product_id', 'items.order_id', 'items.quantity', 'items.price', 'products.id as pro_id', 'products.name', 'products.price'])//])
                     ->join('items', 'orders.id', '=', 'items.order_id')
                     ->join('products', 'items.product_id', '=', 'products.id')
                     ->join('users', 'orders.user_id', '=', 'users.id')
@@ -52,7 +52,7 @@ class QueueController extends Controller
 
                 return $orders;
             }, 1),
-            Benchmark::dd(function () use($orders) {
+            Benchmark::dd(function () use ($orders) {
                 $imageData = base64_encode(file_get_contents(public_path('simple-logo.png')));
                 $logo = 'data:image/png;base64,' . $imageData;
 
@@ -63,20 +63,20 @@ class QueueController extends Controller
                 }
             }, 5)
         ];
-        
+
         return view('orders.index', compact('result'));
     }
 
     public function getOrders($limit = 500)
     {
         $orders = DB::table('orders')->limit($limit)
-        ->select(['orders.id as id','orders.user_id', 'orders.order_number', 'orders.total_amount', 'orders.created_at','users.id as userId','users.name','users.email','items.id  as itemId','items.product_id','items.order_id','items.quantity','items.price','products.id as pro_id','products.name','products.price'])//])
-        ->join('items', 'orders.id', '=', 'items.order_id')
-        ->join('products', 'items.product_id', '=', 'products.id')
-        ->join('users', 'orders.user_id', '=', 'users.id')
-        ->get();
+            ->select(['orders.id as id', 'orders.user_id', 'orders.order_number', 'orders.total_amount', 'orders.created_at', 'users.id as userId', 'users.name', 'users.email', 'items.id  as itemId', 'items.product_id', 'items.order_id', 'items.quantity', 'items.price', 'products.id as pro_id', 'products.name', 'products.price'])//])
+            ->join('items', 'orders.id', '=', 'items.order_id')
+            ->join('products', 'items.product_id', '=', 'products.id')
+            ->join('users', 'orders.user_id', '=', 'users.id')
+            ->get();
 
-    return $orders;
+        return $orders;
     }
     public function getAllWithQueue()
     {
