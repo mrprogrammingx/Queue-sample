@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-// ini_set('max_execution_time', 30); // 0 = Unlimited
+ini_set('max_execution_time', 120); // 0 = Unlimited
 // ini_set('memory_limit','5G');
 
 use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use DebugBar\StandardDebugBar;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Jobs\SendOrderInvoicePDF;
 use Illuminate\Support\Benchmark;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\Debugbar\Facades\Debugbar;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class QueueController extends Controller
 {
@@ -80,7 +81,18 @@ class QueueController extends Controller
     }
     public function getAllWithQueue()
     {
-        $orders = $this->getOrders(5000);
-        return $orders;
+
+        // $orders = $this->getOrders(5000);
+
+        $orders = Order::query()
+            ->limit(5000)
+            ->pluck('id');//->limit(5000)
+
+        Benchmark::dd(function () use ($orders){
+            foreach ($orders as $order) {
+                SendOrderInvoicePDF::dispatch($order);
+            }
+        },5);
+        // return $orders;
     }
 }

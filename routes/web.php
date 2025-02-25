@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/orders', [QueueController::class , 'getAllSimple']);
+Route::get('/orders', [QueueController::class , 'getAllWithQueue']);
