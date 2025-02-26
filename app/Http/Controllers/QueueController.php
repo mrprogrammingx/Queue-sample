@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class QueueController extends Controller
 {
-
     public function getAllSimple()
     {
         $orders = [];
@@ -40,7 +39,7 @@ class QueueController extends Controller
                     $pdf = PDF::loadView('orders.invoicePDF', ['order' => $order, 'logo' => $logo]);
                     $pdf->save(storage_path('app/public/'.$order->user_id.'-'.$order->id.'.pdf'));
                 }
-            }, 1)
+            }, 1),
         ];
 
         return view('orders.index', compact('result'));
@@ -50,7 +49,7 @@ class QueueController extends Controller
     {
 
         return DB::table('orders')->limit($limit)
-            ->select(['orders.id as id', 'orders.user_id', 'orders.order_number', 'orders.total_amount', 'orders.created_at', 'users.id as userId', 'users.name', 'users.email', 'items.id  as itemId', 'items.product_id', 'items.order_id', 'items.quantity', 'items.price', 'products.id as pro_id', 'products.name', 'products.price'])//])
+            ->select(['orders.id as id', 'orders.user_id', 'orders.order_number', 'orders.total_amount', 'orders.created_at', 'users.id as userId', 'users.name', 'users.email', 'items.id  as itemId', 'items.product_id', 'items.order_id', 'items.quantity', 'items.price', 'products.id as pro_id', 'products.name', 'products.price'])// ])
             ->join('items', 'orders.id', '=', 'items.order_id')
             ->join('products', 'items.product_id', '=', 'products.id')
             ->join('users', 'orders.user_id', '=', 'users.id')
@@ -65,7 +64,7 @@ class QueueController extends Controller
             ->pluck('id');
 
         Benchmark::dd(function () use ($orders) {
-            
+
             foreach ($orders as $order) {
                 SendOrderInvoicePDF::dispatch($order);
             }
@@ -73,5 +72,4 @@ class QueueController extends Controller
 
         return $orders;
     }
-
 }

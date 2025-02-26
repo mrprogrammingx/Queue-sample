@@ -25,10 +25,10 @@ class SendOrderInvoicePDF implements ShouldQueue
                 'total_amount',
                 'ordered_at',
             ])->with([
-                    'user:id,name,email',
-                    'items:id,order_id,product_id,quantity,price',
-                    'items.product:id,name,price',
-                ])->findOrFail($orderId);
+                'user:id,name,email',
+                'items:id,order_id,product_id,quantity,price',
+                'items.product:id,name,price',
+            ])->findOrFail($orderId);
     }
 
     /**
