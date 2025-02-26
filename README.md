@@ -10,7 +10,7 @@ The following data is injected into the database using seeders:
 - **1,000 records** in the `products` table
 
 ## Performance Comparison
-### You need to increase your timeout to at least 60 secound for both test
+### You need to increase your timeout to at least 60 seconds for both tests
 
 ### Loading & Processing Orders
 - **Without Queue:**
