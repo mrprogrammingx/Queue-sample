@@ -4,8 +4,8 @@ namespace App\Jobs;
 
 use App\Models\Order;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Queue\Queueable;
 
 class SendOrderInvoicePDF implements ShouldQueue
 {
@@ -20,15 +20,15 @@ class SendOrderInvoicePDF implements ShouldQueue
     {
         $this->order = Order::query()
             ->select([
-                'id', 
-                'order_number', 
-                'total_amount', 
-                'ordered_at'
+                'id',
+                'order_number',
+                'total_amount',
+                'ordered_at',
             ])->with([
-                'user:id,name,email',
-                'items:id,order_id,product_id,quantity,price',
-                'items.product:id,name,price'
-            ])->findOrFail($orderId);
+                    'user:id,name,email',
+                    'items:id,order_id,product_id,quantity,price',
+                    'items.product:id,name,price',
+                ])->findOrFail($orderId);
     }
 
     /**
@@ -37,14 +37,14 @@ class SendOrderInvoicePDF implements ShouldQueue
     public function handle(): void
     {
         $imageData = base64_encode(file_get_contents(public_path('simple-logo.png')));
-        $logo = 'data:image/png;base64,' . $imageData;
+        $logo = 'data:image/png;base64,'.$imageData;
 
         $pdf = PDF::loadView('orders.invoicePDF', [
             'order' => $this->order,
-            'logo' => $logo
+            'logo' => $logo,
         ]);
 
-        $pdf->save($this->order->user_id . '-' . $this->order->id . '.pdf', 'public');
-        
+        $pdf->save($this->order->user_id.'-'.$this->order->id.'.pdf', 'public');
+
     }
 }

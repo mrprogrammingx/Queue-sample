@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class ProductSeeder extends Seeder
 {
@@ -14,7 +13,7 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $products = [];
-        for($i = 0; $i < 1000; $i++){
+        for ($i = 0; $i < 1000; $i++) {
             $products[] = [
                 'name' => "Product $i",
                 'price' => rand(100, 10000) / 100,

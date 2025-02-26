@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Item;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -13,7 +11,7 @@ class Order extends Model
         'user_id',
         'order_number',
         'total_amount',
-        'ordered_at'
+        'ordered_at',
     ];
 
     public function items()

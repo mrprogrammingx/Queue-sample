@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Order;
-use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Item extends Model
@@ -14,7 +12,7 @@ class Item extends Model
         'quantity',
         'price',
     ];
-    
+
     public function order()
     {
         return $this->belongsTo(Order::class);

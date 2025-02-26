@@ -16,7 +16,7 @@ class AliasServiceProvider extends ServiceProvider
 
         $loader->alias('Debugbar', \Barryvdh\Debugbar\Facades\Debugbar::class);
         $loader->alias('Redis', \Illuminate\Support\Facades\Redis::class);
-        
+
     }
 
     /**

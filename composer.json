@@ -20,7 +20,7 @@
         "barryvdh/laravel-debugbar": "^3.15",
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.1",
-        "laravel/pint": "^1.13",
+        "laravel/pint": "^1.21",
         "laravel/sail": "^1.26",
         "maximebf/debugbar": "^2.1",
         "mockery/mockery": "^1.6",

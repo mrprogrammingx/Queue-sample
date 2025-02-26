@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Item;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
@@ -11,7 +10,7 @@ class Product extends Model
         'name',
         'price',
     ];
-    
+
     public function items()
     {
         return $this->hasMany(Item::class);
